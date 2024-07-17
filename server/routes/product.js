@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
       include: [
         {
           model: Image,
-          as: 'Images', 
+          as: 'Images', // Usando o alias correto
           limit: 3,
         },
       ],
@@ -45,15 +45,16 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { name, description, imageUrl, price, Images } = req.body;
+  const { name, description, imageUrl, price, Images,categoryName } = req.body;
 
   try {
-
+    // Cria o novo produto
     const newProduct = await Product.create({
       name,
       description,
       imageUrl,
       price,
+      categoryName
     });
 
 
@@ -84,9 +85,9 @@ router.post('/', async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   try {
-    const { name, description, imageUrl, price } = req.body;
+    const { name, description, imageUrl, price,categoryName } = req.body;
     const [updated] = await Product.update(
-      { name, description, imageUrl, price },
+      { name, description, imageUrl, price,categoryName },
       { where: { id: req.params.id } }
     );
 
